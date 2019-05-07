@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-
+import 'dart:async';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 import './page.dart';
 
 class HomePage extends StatefulWidget {
@@ -8,9 +10,43 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  var _categories = <Widget> [];
+  var fetch = false;
+
+  Future<String> getCategories() async {
+    var response = await http.get(
+      Uri.encodeFull("http://192.168.0.103/taaza/api/getCategory.php"),
+      headers: {
+        "Accept":"application/json"
+      }
+    );
+
+    var items = json.decode(response.body);
+    var temp = <Widget> [];
+    items.forEach((item) {
+      print(item);
+      temp.add(new ListTile(
+          title: new Text(item),
+          onTap: () {
+            Navigator.of(context).pop();
+            Navigator.of(context).push(new MaterialPageRoute(builder: (BuildContext context) => new Page("First Page")));
+          }
+      ));
+      setState(() {
+        _categories = temp;
+      });
+    });
+
+    return response.body;
+
+  }
 
   @override
   Widget build(BuildContext context) {
+    if(!fetch) {
+      fetch=true;
+      getCategories();
+    }
     return new Scaffold(
         appBar: new AppBar(
           iconTheme: IconThemeData(color: Colors.black),
@@ -39,22 +75,7 @@ class _HomePageState extends State<HomePage> {
               ExpansionTile(
               title: Text("Categories"),
               trailing: new Icon(Icons.add),
-              children: <Widget>[
-                new ListTile(
-                    title: new Text("Category One"),
-                    onTap: () {
-                      Navigator.of(context).pop();
-                      Navigator.of(context).push(new MaterialPageRoute(builder: (BuildContext context) => new Page("First Page")));
-                    }
-                ),
-                new ListTile(
-                    title: new Text("Category Two"),
-                    onTap: () {
-                      Navigator.of(context).pop();
-                      Navigator.of(context).push(new MaterialPageRoute(builder: (BuildContext context) => new Page("First Page")));
-                    }
-                ),
-              ],
+              children: _categories,
               ),
               new ListTile(
                   title: new Text("Cart"),
