@@ -495,7 +495,7 @@ class home extends State<Home_screen> {
             ),
             new Container(
               alignment: Alignment.topCenter,
-              height: 700.0,
+              height: 800.0,
 
               child: new GridView.builder(
                   itemCount: photos.length,
