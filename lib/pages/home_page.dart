@@ -5,8 +5,12 @@ import 'package:http/http.dart' as http;
 import './page.dart';
 
 class HomePage extends StatefulWidget {
+import 'package:ecommerce/pages/page.dart';
+
+class Home_screen extends StatefulWidget {
   @override
-  _HomePageState createState() => new _HomePageState();
+  State<StatefulWidget> createState() => new home();
+
 }
 
 class _HomePageState extends State<HomePage> {
@@ -40,7 +44,61 @@ class _HomePageState extends State<HomePage> {
     return response.body;
 
   }
+class Photo {
+  Photo({
+    this.assetName,
+    this.assetPackage,
+    this.title,
+    this.caption,
+  });
 
+  final String assetName;
+  final String assetPackage;
+  final String title;
+  final String caption;
+}
+
+class home extends State<Home_screen> {
+  List list = ['12', '11'];
+
+  List<Photo> photos = <Photo>[
+    Photo(
+      assetName: 'images/logo.png',
+      title: 'Fruits & Vegetables',
+    ),
+    Photo(
+      assetName: 'images/logo.png',
+      title: 'Frozen Veg',
+    ),
+    Photo(
+      assetName: 'images/logo.png',
+      title: 'Beverages',
+    ),
+    Photo(
+      assetName: 'images/logo.png',
+      title: 'Brannded Food',
+    ),
+    Photo(
+      assetName: 'images/logo.png',
+      title: 'Beauty & Personal Care',
+    ),
+    Photo(
+      assetName: 'images/logo.png',
+      title: 'Home Care & Fashion',
+    ),
+    Photo(
+      assetName: 'images/logo.png',
+      title: 'Non Veg',
+    ),
+    Photo(
+      assetName: 'images/logo.png ',
+      title: 'Dairy, Bakery & Eggs',
+    ),
+  ];
+
+  final List<String> items = ['Pakodi', 'Ullipay', 'Biryani'];
+  static const double height = 366.0;
+  String name ='My Wishlist';
   @override
   Widget build(BuildContext context) {
     if(!fetch) {
@@ -65,70 +123,481 @@ class _HomePageState extends State<HomePage> {
           child: new ListView(
             children: <Widget>[
               new UserAccountsDrawerHeader(
-                decoration: new BoxDecoration(
-                    image: new DecorationImage(
-                        image: new NetworkImage("https://www.getmonero.org/press-kit/symbols/monero-symbol-480.png"),
-                        fit: BoxFit.fitHeight
-                    )
+    final Orientation orientation = MediaQuery.of(context).orientation;
+    final ThemeData theme = Theme.of(context);
+    final TextStyle titleStyle =
+    theme.textTheme.headline.copyWith(color: Colors.black54);
+    final TextStyle descriptionStyle = theme.textTheme.subhead;
+    ShapeBorder shapeBorder;
+
+
+    return Scaffold(
+      appBar: new AppBar(
+        backgroundColor: Colors.lightGreen,
+        iconTheme: IconThemeData(color: Colors.black),
+
+        title: Text("Taaza", style: TextStyle(color: Colors.black)),
+        actions: <Widget>[
+          IconButton(
+            tooltip: 'Search',
+            icon: const Icon(Icons.search),
+            onPressed: () async {
+              final int selected = await showSearch<int>(
+                context: context, delegate: null,
+              );
+
+            },
+          ),
+          new Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: new Container(
+              height: 150.0,
+              width: 30.0,
+              child: new GestureDetector(
+                onTap: () {
+                },
+                child: Stack(
+                  children: <Widget>[
+                    new IconButton(
+                        icon: new Icon(
+                          Icons.shopping_cart,
+                          color: Colors.black,
+                        ),
+                        onPressed: (){
+                          Navigator.push(context, MaterialPageRoute(builder: (context)=>Page("No Content Yet")));
+                        }),
+                    list.length == 0
+                        ? new Container()
+                        : new Positioned(
+                        child: new Stack(
+                          children: <Widget>[
+                            new Icon(Icons.brightness_1,
+                                size: 20.0, color: Colors.orange.shade500),
+                            new Positioned(
+                                top: 4.0,
+                                right: 5.5,
+                                child: new Center(
+                                  child: new Text(
+                                    list.length.toString(),
+                                    style: new TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 11.0,
+                                        fontWeight: FontWeight.w500),
+                                  ),
+                                )),
+                          ],
+                        )),
+                  ],
                 ),
+              ),
+            ),
+          )
+        ],
+      ),
+      drawer: new Drawer(
+        child: new ListView(
+          children: <Widget>[
+            new Card(
+              child: UserAccountsDrawerHeader(
+                accountName: new Text("Taaza"),
+                accountEmail: new Text("taaza@gmail.com"),
+                onDetailsPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => Page("No Content Yet")));
+                },
+                decoration: new BoxDecoration(
+                  backgroundBlendMode: BlendMode.difference,
+                  color: Colors.white30,
+                ),
+                currentAccountPicture: CircleAvatar(
+                    backgroundImage: NetworkImage(
+                        "https://www.fakenamegenerator.com/images/sil-male.png")),
               ),
               ExpansionTile(
               title: Text("Categories"),
               trailing: new Icon(Icons.add),
               children: _categories,
+            ),
+            new Card(
+              elevation: 4.0,
+              child: new Column(
+                children: <Widget>[
+                  new ListTile(
+                      leading: Icon(Icons.favorite),
+                      title: new Text(name),
+                      onTap: () {
+                        Navigator.push(context, MaterialPageRoute(builder: (context)=> Page("No Content Yet")));
+                      }),
+                  new Divider(),
+                  new ListTile(
+                      leading: Icon(Icons.history),
+                      title: new Text("Order History "),
+
+
+                      onTap: () {
+                        Navigator.push(context, MaterialPageRoute(builder: (context)=> Page("No Content Yet")));
+
+                      }),
+                ],
               ),
-              new ListTile(
-                  title: new Text("Cart"),
-                  trailing: new Icon(Icons.shopping_basket),
+            ),
+            new Card(
+              elevation: 4.0,
+              child: new Column(
+                children: <Widget>[
+                  new ListTile(
+                      leading: Icon(Icons.settings),
+                      title: new Text("Setting"),
+                      onTap: () {
+                        Navigator.push(context, MaterialPageRoute(builder: (context)=> Page("No Content Yet")));
+                      }),
+                  new Divider(),
+                  new ListTile(
+                      leading: Icon(Icons.help),
+                      title: new Text("Help"),
+                      onTap: () {
+
+                        Navigator.push(context, MaterialPageRoute(builder: (context)=> Page("No Content Yet")));
+
+                      }),
+                ],
+              ),
+            ),
+            new Card(
+              elevation: 4.0,
+              child: new ListTile(
+                  leading: Icon(Icons.power_settings_new),
+                  title: new Text(
+                    "Logout",
+                    style:
+                    new TextStyle(color: Colors.redAccent, fontSize: 17.0),
+                  ),
                   onTap: () {
-                    Navigator.of(context).pop();
-                    Navigator.of(context).push(new MaterialPageRoute(builder: (BuildContext context) => new Page("First Page")));
-                  }
-              ),
-              new ListTile(
-                  title: new Text("My Account"),
-                  trailing: new Icon(Icons.assignment_ind),
-                  onTap: () {
-                    Navigator.of(context).pop();
-                    Navigator.of(context).push(new MaterialPageRoute(builder: (BuildContext context) => new Page("Second Page")));
-                  }
-              ),
-              new ListTile(
-                  title: new Text("Contact Information"),
-                  trailing: new Icon(Icons.phone),
-                  onTap: () {
-                    Navigator.of(context).pop();
-                    Navigator.of(context).push(new MaterialPageRoute(builder: (BuildContext context) => new Page("Second Page")));
-                  }
-              ),
-              new ListTile(
-                  title: new Text("Notifications"),
-                  trailing: new Icon(Icons.notifications),
-                  onTap: () {
-                    Navigator.of(context).pop();
-                    Navigator.of(context).push(new MaterialPageRoute(builder: (BuildContext context) => new Page("Second Page")));
-                  }
-              ),
-              new ListTile(
-                  title: new Text("FAQ"),
-                  trailing: new Icon(Icons.question_answer),
-                  onTap: () {
-                    Navigator.of(context).pop();
-                    Navigator.of(context).push(new MaterialPageRoute(builder: (BuildContext context) => new Page("Second Page")));
-                  }
-              ),
-              new Divider(),
-              new ListTile(
-                title: new Text("Cancel"),
-                trailing: new Icon(Icons.cancel),
-                onTap: () => Navigator.pop(context),
-              ),
-            ],
-          ),
+                    Navigator.push(context,MaterialPageRoute(builder: (context) => Page("No Content Yet")));
+                  }),
+            )
+          ],
         ),
-        body: new Center(
-          child: new Text("Drawer Tutorial", style: new TextStyle(fontSize: 35.0)),
-        )
+      ),
+      body: new SingleChildScrollView(
+        child: Container(
+          child: new Column(children: <Widget>[
+            new Row(
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: <Widget>[
+                  _verticalD(),
+                  new GestureDetector(
+                    onTap: () {
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=> Page("No Content Yet")));
+                    },
+                    child: new Text(
+                      'Best value',
+                      style: TextStyle(
+                          fontSize: 20.0,
+                          color: Colors.black87,
+                          fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                  _verticalD(),
+                  new GestureDetector(
+                    onTap: () {
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=> Page("No Content Yet")));
+                    },
+                    child: new Text(
+                      'Top sellers',
+                      style: TextStyle(
+                          fontSize: 20.0,
+                          color: Colors.black26,
+                          fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                  _verticalD(),
+                  new Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: <Widget>[
+                      new GestureDetector(
+                        onTap: () {
+                          Navigator.push(context, MaterialPageRoute(builder: (context)=> Page("No Content Yet")));
+                        },
+                        child: new Text(
+                          'All',
+                          style: TextStyle(
+                              fontSize: 20.0,
+                              color: Colors.black26,
+                              fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                      _verticalD(),
+                      IconButton(
+                        icon: keyloch,
+                        color: Colors.black26,
+                        onPressed: () {
+
+                        },
+                      )
+                    ],
+                  )
+                ]),
+            new Container(
+              height: 188.0,
+              margin: EdgeInsets.only(left: 5.0),
+              child:
+              ListView(scrollDirection: Axis.horizontal, children: <Widget>[
+                SafeArea(
+                  top: true,
+                  bottom: true,
+                  child: Container(
+                    width: 270.0,
+
+                    child: Card(
+                      shape: shapeBorder,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          SizedBox(
+                            height: 180.0,
+                            child: Stack(
+                              children: <Widget>[
+                                Positioned.fill(
+                                  child: Image.asset(
+                                    'images/logo.png',
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+                SafeArea(
+                  top: true,
+                  bottom: true,
+                  child: Container(
+                    width: 270.0,
+
+                    child: Card(
+                      shape: shapeBorder,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          SizedBox(
+                            height: 180.0,
+                            child: Stack(
+                              children: <Widget>[
+                                Positioned.fill(
+                                  child: Image.asset(
+                                    'images/logo.png',
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+                SafeArea(
+                  top: true,
+                  bottom: true,
+                  child: Container(
+                    width: 270.0,
+
+                    child: Card(
+                      shape: shapeBorder,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          SizedBox(
+                            height: 180.0,
+                            child: Stack(
+                              children: <Widget>[
+                                Positioned.fill(
+                                  child: Image.asset(
+                                    'images/logo.png',
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+                SafeArea(
+                  top: true,
+                  bottom: true,
+                  child: Container(
+                    width: 270.0,
+
+                    child: Card(
+                      shape: shapeBorder,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          SizedBox(
+                            height: 180.0,
+                            child: Stack(
+                              children: <Widget>[
+                                Positioned.fill(
+                                  child: Image.asset(
+                                    'images/logo.png',
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ]),
+            ),
+            new Container(
+              margin: EdgeInsets.only(top: 7.0),
+              child: new Row(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: <Widget>[
+                    _verticalD(),
+                    new GestureDetector(
+                      onTap: () {
+                        Navigator.push(context, MaterialPageRoute(builder: (context)=> Page("No Content Yet")));
+                      },
+                      child: new Text(
+                        'Categories',
+                        style: TextStyle(
+                            fontSize: 20.0,
+                            color: Colors.black87,
+                            fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                    _verticalD(),
+                    new GestureDetector(
+                      onTap: () {
+                        Navigator.push(context, MaterialPageRoute(builder: (context)=> Page("No Content Yet")));
+                      },
+                      child: new Text(
+                        'Popular',
+                        style: TextStyle(
+                            fontSize: 20.0,
+                            color: Colors.black26,
+                            fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                    _verticalD(),
+                    new Row(
+                      children: <Widget>[
+                        new GestureDetector(
+                          onTap: () {
+                            Navigator.push(context, MaterialPageRoute(builder: (context)=> Page("No Content Yet")));
+                          },
+                          child: new Text(
+                            'Whats New',
+                            style: TextStyle(
+                                fontSize: 20.0,
+                                color: Colors.black26,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                      ],
+                    )
+                  ]),
+            ),
+            new Container(
+              alignment: Alignment.topCenter,
+              height: 700.0,
+
+              child: new GridView.builder(
+                  itemCount: photos.length,
+                  primary: false,
+                  physics: NeverScrollableScrollPhysics(),
+                  padding: const EdgeInsets.all(10.0),
+                  gridDelegate: new SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2),
+                  itemBuilder: (BuildContext context, int index) {
+                    return new GestureDetector(
+                        onTap: (){
+
+                          Navigator.push(context, MaterialPageRoute(builder: (context)=> Page("No Content Yet")));
+                        },
+
+                        child: new Container(
+                            margin: EdgeInsets.all(5.0),
+                            child: new Card(
+                              shape: shapeBorder,
+                              elevation: 3.0,
+                              child: new Container(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: <Widget>[
+                                    SizedBox(
+                                      height: 152.0,
+                                      child: Stack(
+                                        children: <Widget>[
+                                          Positioned.fill(
+                                              child: Image.asset(
+                                                photos[index].assetName,
+                                                fit: BoxFit.cover,
+                                              )),
+                                          Container(
+                                            color: Colors.black38,
+                                          ),
+                                          Container(
+                                            //margin: EdgeInsets.only(left: 10.0),
+                                            padding: EdgeInsets.only(
+                                                left: 3.0, bottom: 3.0),
+                                            alignment: Alignment.bottomLeft,
+                                            child: new GestureDetector(
+                                              onTap: () {
+                                                Navigator.push(context, MaterialPageRoute(builder: (context)=> Page("No Content Yet")));
+                                              },
+                                              child: new Text(
+                                                photos[index].title,
+                                                style: TextStyle(
+                                                    fontSize: 18.0,
+                                                    color: Colors.white,
+                                                    fontWeight:
+                                                    FontWeight.bold),
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            )
+                        )
+
+                    );
+                  }),
+            )
+          ]),
+        ),
+      ),
     );
   }
+  Icon keyloch = new Icon(
+    Icons.arrow_forward,
+    color: Colors.black26,
+  );
+
+  _verticalD() => Container(
+    margin: EdgeInsets.only(left: 5.0, right: 0.0, top: 5.0, bottom: 0.0),
+  );
+
+
 }
