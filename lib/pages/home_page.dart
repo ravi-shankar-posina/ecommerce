@@ -1,49 +1,16 @@
+
 import 'package:flutter/material.dart';
+import 'package:ecommerce/pages/page.dart';
 import 'dart:async';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import './page.dart';
-
-class HomePage extends StatefulWidget {
-import 'package:ecommerce/pages/page.dart';
-
+// ignore: camel_case_types
 class Home_screen extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => new home();
 
 }
 
-class _HomePageState extends State<HomePage> {
-  var _categories = <Widget> [];
-  var fetch = false;
-
-  Future<String> getCategories() async {
-    var response = await http.get(
-      Uri.encodeFull("http://192.168.0.103/taaza/api/getCategory.php"),
-      headers: {
-        "Accept":"application/json"
-      }
-    );
-
-    var items = json.decode(response.body);
-    var temp = <Widget> [];
-    items.forEach((item) {
-      print(item);
-      temp.add(new ListTile(
-          title: new Text(item),
-          onTap: () {
-            Navigator.of(context).pop();
-            Navigator.of(context).push(new MaterialPageRoute(builder: (BuildContext context) => new Page("First Page")));
-          }
-      ));
-      setState(() {
-        _categories = temp;
-      });
-    });
-
-    return response.body;
-
-  }
 class Photo {
   Photo({
     this.assetName,
@@ -58,6 +25,7 @@ class Photo {
   final String caption;
 }
 
+// ignore: camel_case_types
 class home extends State<Home_screen> {
   List list = ['12', '11'];
 
@@ -96,40 +64,48 @@ class home extends State<Home_screen> {
     ),
   ];
 
+  var _categories = <Widget> [];
+  var fetch = false;
+
+  Future<String> getCategories() async {
+    var response = await http.get(
+        Uri.encodeFull("http://192.168.0.103/taaza/api/getCategory.php"),
+        headers: {
+          "Accept":"application/json"
+        }
+    );
+
+    var items = json.decode(response.body);
+    var temp = <Widget> [];
+    items.forEach((item) {
+      print(item);
+      temp.add(new ListTile(
+          title: new Text(item),
+          onTap: () {
+            Navigator.of(context).pop();
+            Navigator.of(context).push(new MaterialPageRoute(builder: (BuildContext context) => new Page("First Page")));
+          }
+      ));
+      setState(() {
+        _categories = temp;
+      });
+    });
+
+    return response.body;
+
+  }
+
   final List<String> items = ['Pakodi', 'Ullipay', 'Biryani'];
-  static const double height = 366.0;
   String name ='My Wishlist';
   @override
   Widget build(BuildContext context) {
+    final ThemeData theme = Theme.of(context);
+    theme.textTheme.headline.copyWith(color: Colors.black54);
+    ShapeBorder shapeBorder;
     if(!fetch) {
       fetch=true;
       getCategories();
     }
-    return new Scaffold(
-        appBar: new AppBar(
-          iconTheme: IconThemeData(color: Colors.black),
-          centerTitle:true,
-          title:const Text('Taaza', style: TextStyle(color: Colors.black)),
-          backgroundColor: Colors.lightGreen,
-          actions: <Widget>[
-            IconButton(
-            icon: Icon(Icons.notifications,color: Colors.black,),
-              onPressed: () {
-                Navigator.of(context).push(new MaterialPageRoute(builder: (BuildContext context) => new Page("No new notifications")));
-              },
-          ),],
-        ),
-        drawer: new Drawer(
-          child: new ListView(
-            children: <Widget>[
-              new UserAccountsDrawerHeader(
-    final Orientation orientation = MediaQuery.of(context).orientation;
-    final ThemeData theme = Theme.of(context);
-    final TextStyle titleStyle =
-    theme.textTheme.headline.copyWith(color: Colors.black54);
-    final TextStyle descriptionStyle = theme.textTheme.subhead;
-    ShapeBorder shapeBorder;
-
 
     return Scaffold(
       appBar: new AppBar(
@@ -142,7 +118,8 @@ class home extends State<Home_screen> {
             tooltip: 'Search',
             icon: const Icon(Icons.search),
             onPressed: () async {
-              final int selected = await showSearch<int>(
+              // ignore: unused_local_variable
+              final selected = await showSearch<int>(
                 context: context, delegate: null,
               );
 
@@ -215,7 +192,8 @@ class home extends State<Home_screen> {
                     backgroundImage: NetworkImage(
                         "https://www.fakenamegenerator.com/images/sil-male.png")),
               ),
-              ExpansionTile(
+            ),
+            ExpansionTile(
               title: Text("Categories"),
               trailing: new Icon(Icons.add),
               children: _categories,
