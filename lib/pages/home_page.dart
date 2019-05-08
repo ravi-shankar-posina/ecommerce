@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:ecommerce/pages/page.dart';
 
+// ignore: camel_case_types
 class Home_screen extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => new home();
@@ -22,6 +23,7 @@ class Photo {
   final String caption;
 }
 
+// ignore: camel_case_types
 class home extends State<Home_screen> {
   List list = ['12', '11'];
 
@@ -61,15 +63,11 @@ class home extends State<Home_screen> {
   ];
 
   final List<String> items = ['Pakodi', 'Ullipay', 'Biryani'];
-  static const double height = 366.0;
   String name ='My Wishlist';
   @override
   Widget build(BuildContext context) {
-    final Orientation orientation = MediaQuery.of(context).orientation;
     final ThemeData theme = Theme.of(context);
-    final TextStyle titleStyle =
     theme.textTheme.headline.copyWith(color: Colors.black54);
-    final TextStyle descriptionStyle = theme.textTheme.subhead;
     ShapeBorder shapeBorder;
 
 
@@ -84,7 +82,8 @@ class home extends State<Home_screen> {
             tooltip: 'Search',
             icon: const Icon(Icons.search),
             onPressed: () async {
-              final int selected = await showSearch<int>(
+              // ignore: unused_local_variable
+              final selected = await showSearch<int>(
                 context: context, delegate: null,
               );
 
