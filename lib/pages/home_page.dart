@@ -59,9 +59,9 @@ class home extends State<Home_screen> {
       title: 'Non Veg',
     ),
     Photo(
-      assetName: 'images/logo.png ',
+      assetName: 'images/logo.png',
       title: 'Dairy, Bakery & Eggs',
-    ),
+    )
   ];
 
   var _categories = <Widget> [];
